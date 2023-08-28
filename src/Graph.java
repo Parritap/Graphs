@@ -1,16 +1,21 @@
 // Java program to count all paths from a source
 // to a destination
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 
 // This class represents a directed graph using
 // adjacency list representation
 
+//Pero es programar una matriz de adyacencia, y que cuando el usuario
+//de los parámetros i, j diga si hay una conexión entre esos nodos o si no la hay
+
 class Graph {
 
     // No. of vertices
     private int num_nodes;
+    private Integer[][] matrizDeAdyacencia;
 
     // Array of lists for
     // Adjacency List
@@ -64,21 +69,35 @@ class Graph {
         return pathCount;
     }
 
-    // Driver Code
-    public static void main(String args[]) {
-        Graph g = new Graph(5);
-        g.addEdge(0, 1);
-        g.addEdge(0, 2);
-        g.addEdge(0, 3);
-        g.addEdge(1, 3);
-        g.addEdge(2, 3);
-        g.addEdge(1, 4);
-        g.addEdge(2, 4);
+    public void obtenerMatrixAdayacencia() {
+        var matrix = new Integer[num_nodes][num_nodes];
+        for (int i = 0; i < num_nodes; i++) {
+            for (int j = 0; j < num_nodes; j++) {
+                if (matrix[i][j] == null && haveEdge(i, j)) matrix[i][j] = 1;
+            }
+        }
+        for (int i = 0; i < num_nodes; i++) {
+            for (int j = 0; j < num_nodes; j++) {
+                if (matrix[i][j] == null) matrix[i][j] = 0;
+            }
+        }
+        this.matrizDeAdyacencia = matrix;
+    }
 
-        int s = 0, d = 3;
+    public boolean haveEdge(int i, int j) {
+        for (int vertex : this.adj[i]) {
+            if (vertex == j) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-        // Function call
-        System.out.println(g.countPaths(s, d));
+    void printMatrizAdyacencia() {
+        if (matrizDeAdyacencia == null) obtenerMatrixAdayacencia();
+        for (Integer[] array : matrizDeAdyacencia) {
+            System.out.println(Arrays.toString(array));
+        }
     }
 }
 
