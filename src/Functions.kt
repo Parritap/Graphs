@@ -1,18 +1,32 @@
 fun main() {
-    val graph = createExampleGraph()
-    val x: Array<IntArray>;
+   val graph = createExampleGraph()
+   val adjacencyMatrix = graph.getAdjacencyMatrix()
+   adjacencyMatrix.forEach { println(it.contentToString()) }
+   print("------------------\n")
+   val closure = getTransitiveClosure(graph)
+   closure.forEach { println(it.contentToString()) }
+
 }
 
-fun getTransitiveClosure(g: Graph) {
-    val m = g.matrizDeAdyacencia
-    for (e in 1..g.num_nodes) {
-        //Devuelve todos los indices que contengan un uno como valor asociado.
-        val c = m[e].withIndex().filter { it.value == 1 }.map { it.index };
-        val fila = columnToList(m,e).withIndex().filter { it.value == 1 }.map { it.index };
-        //Devuelve todos los indices que contenga un uno como valor asociado en la columna dada
-
+fun getTransitiveClosure(g: Graph) : Array<IntArray> {
+    val m = g.getAdjacencyMatrix()
+    for (e in 0 until g.v) {
+        val row = m[e].withIndex().filter { it.value == 1 }.map { it.index };
+        val column = columnToList(m,e).withIndex().filter { it.value == 1 }.map { it.index };
+        crossProductOf(column,row).forEach { m[it.first][it.second] = 1 }
     }
+    return m;
 }
+
+fun crossProductOf(row: List<Int>, column: List<Int>): ArrayList<Pair<Int,Int>> {
+    val res = ArrayList<Pair<Int,Int>>()
+    if (!row.isEmpty() and !column.isEmpty()) row.forEach { i -> column.forEach { j -> res.add(Pair(i,j)) } }
+    return res;
+}
+
+//Obtiene una lista a partir de una columna en la posición i
+fun columnToList(m: Array<IntArray>, i: Int): List<Int> = m.map { fila -> fila[i] }
+
 
 fun createExampleGraph(): Graph {
     val graph = Graph(4)
@@ -24,7 +38,3 @@ fun createExampleGraph(): Graph {
     graph.addEdge(3, 2)
     return graph
 }
-
-
-//Obtiene una lista a partir de una columna en la posición i
-fun columnToList(m: Array<IntArray>, i: Int): List<Int> = m.map { fila -> fila[i] }
