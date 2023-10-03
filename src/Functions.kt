@@ -20,7 +20,7 @@ fun getTransitiveClosure(g: Graph) : Array<IntArray> {
 
 fun crossProductOf(row: List<Int>, column: List<Int>): ArrayList<Pair<Int,Int>> {
     val res = ArrayList<Pair<Int,Int>>()
-    if (!row.isEmpty() and !column.isEmpty()) row.forEach { i -> column.forEach { j -> res.add(Pair(i,j)) } }
+    row.forEach { i -> column.forEach { j -> res.add(Pair(i,j)) } }
     return res;
 }
 
