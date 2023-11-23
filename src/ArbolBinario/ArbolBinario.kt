@@ -1,4 +1,4 @@
-package BinaryTree
+package ArbolBinario
 
 /**
  * Binary tree
@@ -8,10 +8,10 @@ package BinaryTree
  * @property rigthNode
  * @constructor Create empty Binary tree
  */
-class BinaryTree(
+class ArbolBinario(
     var value: Int,
-    var leftNode: BinaryTree? = null,
-    var rigthNode: BinaryTree? = null
+    var leftNode: ArbolBinario? = null,
+    var rigthNode: ArbolBinario? = null
 ) {
 
     /**
@@ -22,13 +22,13 @@ class BinaryTree(
     fun inserValue (value : Int ) : Unit {
         if ( value < this.value ) {
             if ( this.leftNode == null ) {
-                this.leftNode = BinaryTree(value)
+                this.leftNode = ArbolBinario(value)
             } else {
                 this.leftNode!!.inserValue(value)
             }
         } else {
             if ( this.rigthNode == null ) {
-                this.rigthNode = BinaryTree(value)
+                this.rigthNode = ArbolBinario(value)
             } else {
                 this.rigthNode!!.inserValue(value)
             }

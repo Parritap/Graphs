@@ -1,8 +1,8 @@
-package BinaryTree
+package ArbolBinario
 
 fun main() {
     val myList = listOf(3,10,14,1,6,4,7,13)
-    val tree = BinaryTree(8)
+    val tree = ArbolBinario(8)
     myList.forEach { tree.inserValue(it) }
 
 
